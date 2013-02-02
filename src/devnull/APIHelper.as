@@ -74,6 +74,11 @@ package devnull
 				if( cache == null || _planetMap["system"].name != cache["system"].name )
 				{
 					trace( "Parsed planets" );
+					for( var i:int = 0; i < _planetMap.system.planetarray.length; i++ )
+					{
+						_planetMap.system.planetarray[i].x = (_planetMap.system.planetarray[i].x - 100) / Main.PLANET_RATIO; 
+						_planetMap.system.planetarray[i].y = (_planetMap.system.planetarray[i].y - 100) / Main.PLANET_RATIO; 
+					}
 					_solarSystem.drawPlanets( _planetMap );
 				}
 			}
