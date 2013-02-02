@@ -64,7 +64,7 @@ package devnull {
 			Actuate.tween(this, dur, {zoom:value});
 		}
 
-		public function tweenToPos(toX:Number, toY:Number, duration:Number):void {
+		public function tweenToCenterOnPoint(toX:Number, toY:Number, duration:Number):void {
 			Actuate.tween(this, duration, {x:toX, y:toY}).onUpdate(updateViewPort);
 		}
 	}
