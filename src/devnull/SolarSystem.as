@@ -19,13 +19,12 @@ package devnull {
 		private var _stars:Vector.<Star>;
 		private var _planets:Vector.<Planet>;
 		private var _edge:Edge;
+		private var _selectedStar:Star;
 		
 		
 		public function SolarSystem(vp:ViewPort) {
 			_vp = vp;
-			_map = new BitmapData(vp.width, vp.height, false, 0x000000);
-			var bmp:Bitmap = new Bitmap(_map);
-			addChild(bmp);
+			addChild(new StarBackground(_vp));
 			
 			_stars = new <Star>[];
 			_planets = new <Planet>[];
@@ -38,7 +37,6 @@ package devnull {
 
 		public function draw(data:Object):void {
 			_data = data;
-			_map.fillRect( new Rectangle( 0, 0, _vp.width, _vp.height), 0x000000 );
 			for each( var starObject:Object in _data.stars )
 			{
 				var star:Star = new Star( _vp, starObject );
@@ -60,10 +58,11 @@ package devnull {
 			
 			destroyPlanets();
 			var star:Star = Star( event.target );
+			_selectedStar = star;
 
 			var zoom:Number = Math.random() * 3 + 2;
-			_vp.tweenToZoom(zoom, 1);
-			_vp.tweenToCenterOnPoint(star.originalX, star.originalY, 1);
+			_vp.tweenToZoom(zoom, 2);
+			_vp.tweenToCenterOnPoint(star.originalX, star.originalY, 2);
 			
 			dispatchEvent(new NavigationEvent(NavigationEvent.NAVIGATE_TO_STAR, star.name));
 		}
@@ -100,6 +99,12 @@ package devnull {
 
 		private function onEdgeClicked(event:MouseEvent):void {
 			dispatchEvent(new NavigationEvent(NavigationEvent.NAVIGATE_TO_PLANET, _edge.name));
+			
+			if (_selectedStar != null)
+			{
+				_vp.tweenToCenterOnPoint(_selectedStar.originalX, _selectedStar.originalY, 2);
+			}
+			_vp.tweenToZoom(40, 2);
 		}
 
 		public function destroyPlanets():void {
