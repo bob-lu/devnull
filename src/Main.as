@@ -22,6 +22,9 @@ package
 		private var _ship:SpaceShip;
 		private var _vp:ViewPort;
 		private var _solarSystem:SolarSystem;
+		private const PLANET_RATIO:Number = 20;
+		
+		[SWF(width=800,height=600)]
 		
 		public function Main()
 		{
@@ -57,7 +60,12 @@ package
 
 		private function onShipMove( event:APIEvent ):void
 		{
-			_ship.setPosition( event.data["unix"], event.data["uniy"] );
+			var sx:Number = event.data["unix"] / PLANET_RATIO;
+			var sy:Number = event.data["uniy"] / PLANET_RATIO;
+			var x:Number = event.data["systemx"] + sx;
+			var y:Number = event.data["systemy"] + sy;
+			
+			_ship.setPosition( x, y );
 		}
 		
 		private function onStarClicked( event:StarEvent ):void
