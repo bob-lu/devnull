@@ -38,6 +38,8 @@ package devnull {
 			this.mouseChildren = false;
 			
 			addEventListener(Event.ENTER_FRAME, onEF);
+			
+			scaleX = scaleY = .5;
 		}
 
 		private function onVpUpdate(event:Event):void {
