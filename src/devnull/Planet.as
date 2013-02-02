@@ -5,8 +5,6 @@
 package devnull {
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
 
 	public class Planet extends Sprite{
 		private var _vp:ViewPort;
@@ -27,17 +25,15 @@ package devnull {
 			this.graphics.drawCircle( 0, 0, 2 * planetRadius );
 			this.graphics.endFill();
 
-			var tf:TextField = new TextField();
-			tf.textColor = 0xffffff;
-			tf.autoSize = TextFieldAutoSize.LEFT;
-			tf.text = _data.planet_no;
-			tf.selectable = false;
-			
-			updateCoordinates();
-			
+			var tf:SpaceText = new SpaceText(this.name);
 			tf.x = -( tf.width * 0.5 );
 			tf.y = 5 * 0.5 + 2;
 			addChild(tf);
+			
+			updateCoordinates();
+			
+			useHandCursor = true;
+			buttonMode = true;
 		}
 
 		private function updateCoordinates(event:Event=null):void {
@@ -50,17 +46,8 @@ package devnull {
 			addEventListener(Event.REMOVED_FROM_STAGE, destroy);
 		}
 
-		public function get originalX():Number {
-			return _data.x;
-		}
-		
-		public function get originalY():Number {
-			return _data.y;
-		}
-
-		override public function get name():String
-		{
-			return _data.plante_no;
-		}
+		public function get originalX():Number 		{ 	return _data.x;			}
+		public function get originalY():Number 		{ 	return _data.y;			}
+		override public function get name():String	{	return _data.plante_no;	}
 	}
 }

@@ -18,7 +18,7 @@ package devnull {
 
 		private var _stars:Vector.<Star>;
 		private var _planets:Vector.<Planet>;
-		
+		private var _edge:Edge;
 		
 		
 		public function SolarSystem(vp:ViewPort) {
@@ -29,7 +29,11 @@ package devnull {
 			
 			_stars = new <Star>[];
 			_planets = new <Planet>[];
+			_edge = new Edge();
+			_edge.addEventListener(MouseEvent.CLICK, onEdgeClicked);
 		}
+
+		
 
 		public function draw(data:Object):void {
 			_data = data;
@@ -80,6 +84,8 @@ package devnull {
 				_vp.tweenToZoom( 40, 2 );
 				
 			}
+			addChild(_edge);
+			
 		}
 
 		private function onPlanetClicked(event:MouseEvent):void {
@@ -92,12 +98,19 @@ package devnull {
 			}
 		}
 
+		private function onEdgeClicked(event:MouseEvent):void {
+			dispatchEvent(new NavigationEvent(NavigationEvent.NAVIGATE_TO_PLANET, _edge.name));
+		}
+
 		public function destroyPlanets():void {
 			for each(var planet:Planet in _planets) {
 				planet.removeEventListener(MouseEvent.CLICK, onPlanetClicked);
 				removeChild(planet);
 			}
 			_planets = new <Planet>[];
+			
+			if (_edge.parent)
+				removeChild(_edge);
 		}
 	}
 }

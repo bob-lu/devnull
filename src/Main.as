@@ -1,7 +1,5 @@
 package
 {
-	import com.eclecticdesignstudio.motion.Actuate;
-
 	import devnull.APIEvent;
 	import devnull.APIHelper;
 	import devnull.SolarSystem;
@@ -13,6 +11,7 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.KeyboardEvent;
+	import flash.text.Font;
 	import flash.ui.Keyboard;
 
 	public class Main extends Sprite
@@ -46,6 +45,7 @@ package
 			_api = new APIHelper( _solarSystem );
 			_api.addEventListener( APIEvent.SHIP_MOVE, onShipMove );
 			_api.getLongRange();
+			
 		}
 
 		
