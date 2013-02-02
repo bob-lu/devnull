@@ -65,7 +65,7 @@ package
 			var x:Number = event.data["unix"] + sx;
 			var y:Number = event.data["uniy"] + sy;
 			
-			_ship.setPosition( x, y );
+			_ship.setPosition( x-sx, y-sy );
 		}
 		
 		private function onStarClicked( event:StarEvent ):void
