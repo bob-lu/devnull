@@ -3,6 +3,8 @@
  * @author Tommy Salomonsson
  */
 package devnull {
+	import com.eclecticdesignstudio.motion.Actuate;
+
 	import devnull.ViewPort;
 
 	import flash.events.Event;
@@ -41,6 +43,7 @@ package devnull {
 		}
 
 		public function restore():void {
+			Actuate.stop(this);
 			this.x = 100;
 			this.y = 100;
 			_zoom = 3;
@@ -54,6 +57,15 @@ package devnull {
 		public function set zoom(value:Number):void {
 			_zoom = value;
 			updateViewPort();
+		}
+
+
+		public function tweenToZoom(value:Number, dur:Number):void {
+			Actuate.tween(this, dur, {zoom:value});
+		}
+
+		public function tweenToPos(toX:Number, toY:Number, duration:Number):void {
+			Actuate.tween(this, duration, {x:toX, y:toY}).onUpdate(updateViewPort);
 		}
 	}
 }
