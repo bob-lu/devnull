@@ -110,7 +110,7 @@ package devnull
 				dispatchEvent( new APIEvent( APIEvent.SHIP_MOVE, _pos, false ) );
 				
 				var movingInUniverse:Boolean = ( _pos.unix != cache.unix || _pos.uniy != cache.uniy );
-				var movingInSystem:Boolean = ( _pos.systemx != cache.systemx || _pos.systemy != cache.systemy );
+				var movingInSystem:Boolean = false;//( _pos.systemx != cache.systemx || _pos.systemy != cache.systemy );
 				
 				if( movingInSystem || movingInUniverse )
 				{
