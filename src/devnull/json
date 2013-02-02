@@ -1,0 +1,71 @@
+{
+	"system": {
+		"name": "Wolf 1061",
+		"x": "80",
+		"y": "30",
+		"class": "M3.0V",
+		"planets": "5",
+		"planetarray": [
+			{	
+				"day": "5730.795",
+				"esc_velocity": "579225.370",
+				"cloud_cover": "0.000",
+				"radius": "3346.411",
+				"type": "Rock",
+				"planet_no": "Wolf 1061 I",
+				"x": 47,
+				"y": 68,
+				"surf_grav": "0.511",
+				"orbit_zone": "1"
+			},
+			{
+				"day": "15.854",
+				"esc_velocity": "1167619.950",
+				"cloud_cover": "0.233",
+				"radius": "6649.917",
+				"type": "Terrestrial",
+				"planet_no": "Wolf 1061 II",
+				"x": 138,
+				"y": 38,
+				"surf_grav": "1.045",
+				"orbit_zone": "1"
+			},
+			{
+				"day": "8.304",
+				"esc_velocity": "4982098.704",
+				"cloud_cover": "1.000",
+				"radius": "51230.910",
+				"type": "Jovian",
+				"planet_no": "Wolf 1061 III",
+				"x": 26,
+				"y": 84,
+				"surf_grav": "  inf",
+				"orbit_zone": "1"
+			},
+			{
+				"day": "2106.273",
+				"esc_velocity": "561931.556",
+				"cloud_cover": "0.000",
+				"radius": "3247.403",
+				"type": "Rock",
+				"planet_no": "Wolf 1061 IV",
+				"x": 146,
+				"y": 187,
+				"surf_grav": "0.496",
+				"orbit_zone": "1"
+			},
+			{
+				"day": "2512.554",
+				"esc_velocity": "222954.348",
+				"cloud_cover": "0.000",
+				"radius": "1293.327",
+				"type": "Rock",
+				"planet_no": "Wolf 1061 V",
+				"x": 113,
+				"y": 58,
+				"surf_grav": "0.196",
+				"orbit_zone": "1"
+			}
+		]
+	}
+}

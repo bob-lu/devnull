@@ -53,6 +53,14 @@ package devnull {
 			var star:Star = Star( event.target );
 			dispatchEvent(new StarEvent(StarEvent.STAR_CLICKED, star));
 		}
-		
+
+		public function drawPlanets( _planetMap:Object ):void
+		{
+			if( _planetMap.system != null )
+			{
+				trace( "At star: "+ _planetMap.system.name );
+				trace( "Pos: ", _planetMap.system.x, _planetMap.system.y );
+			}
+		}
 	}
 }
