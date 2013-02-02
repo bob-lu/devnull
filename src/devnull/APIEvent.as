@@ -12,22 +12,30 @@ package devnull
 		public static const SHIP_MOVE:String = "ship_move";
 		private var _data:Object;
 		private var _ftl:Boolean;
+		private var _y:Number;
+		private var _x:Number;
 		
-		public function APIEvent( type:String, data:Object, ftl:Boolean )
+		public function APIEvent( type:String, x:Number, y:Number, ftl:Boolean )
 		{
 			super( type, false, false );
-			_data = data;
 			_ftl = ftl;
-		}
-
-		public function get data():Object
-		{
-			return _data;
+			_x = x;
+			_y = y;
 		}
 
 		public function get ftl():Boolean
 		{
 			return _ftl;
+		}
+
+		public function get x():Number
+		{
+			return _x;
+		}
+
+		public function get y():Number
+		{
+			return _y;
 		}
 	}
 }

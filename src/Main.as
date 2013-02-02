@@ -45,7 +45,6 @@ package
 			_api = new APIHelper( _solarSystem );
 			_api.addEventListener( APIEvent.SHIP_MOVE, onShipMove );
 			_api.getLongRange();
-			
 		}
 
 		
@@ -64,20 +63,7 @@ package
 
 		private function onShipMove( event:APIEvent ):void
 		{
-			var x:Number = 0;
-			var y:Number = 0;
-			if( event.ftl )
-			{
-				x = event.data.x;
-				y = event.data.y;
-			}
-			else
-			{
-				x = event.data["unix"];
-				y = event.data["uniy"];
-			}
-			
-			_ship.setPosition( x, y );
+			_ship.setPosition( event.x, event.y );
 		}
 		
 		private function onNavigateToStar( event:NavigationEvent ):void

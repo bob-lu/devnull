@@ -25,7 +25,7 @@ package devnull {
 			this.graphics.drawCircle( 0, 0, 2 * planetRadius );
 			this.graphics.endFill();
 
-			var tf:SpaceText = new SpaceText(this.name);
+			var tf:SpaceText = new SpaceText(_data.planet_no);
 			tf.x = -( tf.width * 0.5 );
 			tf.y = 5 * 0.5 + 2;
 			addChild(tf);
@@ -48,6 +48,6 @@ package devnull {
 
 		public function get originalX():Number 		{ 	return _data.x;			}
 		public function get originalY():Number 		{ 	return _data.y;			}
-		override public function get name():String	{	return _data.plante_no;	}
+		override public function get name():String	{	return _data.planet_no;	}
 	}
 }
