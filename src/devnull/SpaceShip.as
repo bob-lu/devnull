@@ -70,7 +70,7 @@ package devnull {
 
 		public function setPosition(x:Number, y:Number):void {
 			
-			_spinCounter = 200;
+			_spinCounter = 60;
 			
 			_currentPos.x = x;
 			_currentPos.y = y;
