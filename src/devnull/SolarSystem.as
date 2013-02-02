@@ -51,7 +51,8 @@ package devnull {
 			var star:Star = Star( event.target );
 
 			var zoom:Number = Math.random() * 3 + 2;
-			_vp.centerOnPoint(star.originalX, star.originalY, zoom);
+			_vp.tweenToZoom(zoom, 1);
+			_vp.tweenToPos(star.originalX, star.originalY, 1);
 			
 			dispatchEvent(new StarEvent(StarEvent.STAR_CLICKED, star));
 		}

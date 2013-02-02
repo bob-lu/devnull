@@ -1,5 +1,7 @@
 package
 {
+	import com.eclecticdesignstudio.motion.Actuate;
+
 	import devnull.APIEvent;
 	import devnull.APIHelper;
 	import devnull.SolarSystem;
@@ -43,10 +45,10 @@ package
 
 		private function onKeyUp(event:KeyboardEvent):void {
 			if (event.keyCode == Keyboard.A) {
-				_vp.zoom -= 0.1;
+				_vp.tweenToZoom(_vp.zoom - 1, 0.5);
 			}
 			if (event.keyCode == Keyboard.S) {
-				_vp.zoom += 0.1;
+				_vp.tweenToZoom(_vp.zoom + 1, 0.5);
 			}
 			if (event.keyCode == Keyboard.SPACE) {
 				_vp.restore();
