@@ -13,8 +13,6 @@ package devnull
 	import flash.net.URLRequest;
 	import flash.utils.Timer;
 
-	import org.osmf.utils.URL;
-
 	public class APIHelper extends EventDispatcher
 	{
 		private static const URL:String = "https://lostinspace.lanemarknad.se:8000/api2/?session=deb6dcda-3330-44df-b622-d955215c6483";

@@ -10,12 +10,8 @@ package
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
-	import flash.events.Event;
-	import flash.events.IOErrorEvent;
-	import flash.events.TimerEvent;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
-	import flash.utils.Timer;
+	import flash.events.KeyboardEvent;
+	import flash.ui.Keyboard;
 
 	public class Main extends Sprite
 	{
@@ -29,21 +25,32 @@ package
 		{
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align		= StageAlign.TOP_LEFT;
-			
+			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 			
 			
 			_vp = new ViewPort();
-			_vp.zoom = 3;
 			
 			_solarSystem = new SolarSystem(_vp);
 			_solarSystem.addEventListener(StarEvent.STAR_CLICKED, onStarClicked);
 			_ship = new SpaceShip(_vp);
-			addChild( _ship );
 			addChild(_solarSystem);
+			addChild( _ship );
 
 			_api = new APIHelper( _solarSystem );
 			_api.addEventListener( APIEvent.SHIP_MOVE, onShipMove );
 			_api.getLongRange();
+		}
+
+		private function onKeyUp(event:KeyboardEvent):void {
+			if (event.keyCode == Keyboard.A) {
+				_vp.zoom -= 0.1;
+			}
+			if (event.keyCode == Keyboard.S) {
+				_vp.zoom += 0.1;
+			}
+			if (event.keyCode == Keyboard.SPACE) {
+				_vp.restore();
+			}
 		}
 
 		private function onShipMove( event:APIEvent ):void
