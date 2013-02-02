@@ -64,12 +64,20 @@ package
 
 		private function onShipMove( event:APIEvent ):void
 		{
-			var sx:Number = ( event.data["systemx"] - 100 ) / PLANET_RATIO;
-			var sy:Number = ( event.data["systemy"] - 100 ) / PLANET_RATIO;
-			var x:Number = event.data["unix"] + sx;
-			var y:Number = event.data["uniy"] + sy;
+			var x:Number = 0;
+			var y:Number = 0;
+			if( event.ftl )
+			{
+				x = event.data.x;
+				y = event.data.y;
+			}
+			else
+			{
+				x = event.data["unix"];
+				y = event.data["uniy"];
+			}
 			
-			_ship.setPosition( x-sx, y-sy );
+			_ship.setPosition( x, y );
 		}
 		
 		private function onNavigateToStar( event:NavigationEvent ):void

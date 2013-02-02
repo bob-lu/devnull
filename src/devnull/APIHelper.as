@@ -27,6 +27,8 @@ package devnull
 		private var _planetMap:Object;
 		private var _goingToSystem:Boolean;
 		private var _goingToPlanet:Boolean;
+		private var _ftlLoaderLoader:URLLoader;
+		private var _planetName:String;
 		
 		public function APIHelper( solarSystem:SolarSystem )
 		{
@@ -105,7 +107,7 @@ package devnull
 				var cache:Object = _pos;
 				_pos = JSON.parse( _shipLoader.data );
 				
-				dispatchEvent( new APIEvent( APIEvent.SHIP_MOVE, _pos ) );
+				dispatchEvent( new APIEvent( APIEvent.SHIP_MOVE, _pos, false ) );
 				
 				var movingInUniverse:Boolean = ( _pos.unix != cache.unix || _pos.uniy != cache.uniy );
 				var movingInSystem:Boolean = ( _pos.systemx != cache.systemx || _pos.systemy != cache.systemy );
@@ -157,11 +159,44 @@ package devnull
 		{
 			_goingToPlanet = true;
 			_goingToSystem = false;
-			var selectLoader:URLLoader = new URLLoader();
-			selectLoader.addEventListener( IOErrorEvent.IO_ERROR, onError );
-			selectLoader.load( new URLRequest( URL +"&command=ship&arg=setsystemdest&arg2="+ encodeURI( name ) ) );
+			_planetName = name;
+			if( _ftlLoaderLoader == null )
+			{
+				_ftlLoaderLoader = new URLLoader();
+			}
+			_ftlLoaderLoader.addEventListener( Event.COMPLETE, onFTLLoaded );
+			_ftlLoaderLoader.addEventListener( IOErrorEvent.IO_ERROR, onError );
+			_ftlLoaderLoader.load( new URLRequest( URL +"&command=ship&arg=setsystemdest&arg2="+ encodeURI( name ) ) );
 			if( !_update.running )
 				_update.start();
+		}
+
+		private function onFTLLoaded( e:Event ):void
+		{
+			try
+			{
+				var data:Object = JSON.parse( _ftlLoaderLoader.data );
+
+				var starX:Number = _planetMap.system.x;
+				var starY:Number = _planetMap.system.y;
+
+				trace( "Parsed planets" );
+				for( var i:int = 0; i < _planetMap.system.planetarray.length; i++ )
+				{
+					_planetMap.systemdest.x = ( ( _planetMap.systemdest.x - 100) / Main.PLANET_RATIO ) + starX;
+					_planetMap.systemdest.y = ( ( _planetMap.systemdest.y - 100) / Main.PLANET_RATIO ) + starY;
+				}
+				
+				dispatchEvent( new APIEvent( APIEvent.SHIP_MOVE, data.systemdest, true ) );
+				_planetName = null;
+			}
+			catch( e:Error )
+			{
+				if( _planetName != null )
+				{
+					gotoPlanet( _planetName );
+				}
+			}
 		}
 
 		private function onError( e:IOErrorEvent ):void
