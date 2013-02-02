@@ -28,6 +28,7 @@ package devnull {
 			_life--;
 			this.x += _xspeed;
 			this.y += _yspeed;
+			this.alpha = (_life / 30);
 			if (_life <= 0) {
 				addEventListener(Event.ENTER_FRAME, onEF);
 				if (parent)

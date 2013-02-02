@@ -2,7 +2,10 @@ package
 {
 	import devnull.APIEvent;
 	import devnull.APIHelper;
+	import devnull.SolarSystem;
 	import devnull.SpaceShip;
+	import devnull.ViewPort;
+	import devnull.events.StarEvent;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -24,13 +27,11 @@ package
 		
 		private var _loader:URLLoader;
 		private var _data:Object;
-		private var _map:BitmapData;
-		private const MAP_WIDTH:Number = 800;
-		private const MAP_HEIGHT:Number = 600;
-		private const MAP_ZOOM:Number = 2.3;
 		private var _timer:Timer;
 		private var _shipLoader:URLLoader;
 		private var _ship:SpaceShip;
+		private var _vp:ViewPort;
+		private var _solarSystem:SolarSystem;
 		
 		public function Main()
 		{
@@ -48,7 +49,12 @@ package
 			_loader.addEventListener( Event.COMPLETE, onLoaded );
 			_loader.addEventListener( IOErrorEvent.IO_ERROR, onError );
 			
-			_ship = new SpaceShip();
+			_vp = new ViewPort();
+			
+			_solarSystem = new SolarSystem(_vp);
+			_solarSystem.addEventListener(StarEvent.STAR_CLICKED, onStarClicked);
+			_ship = new SpaceShip(_vp);
+			addChild(_solarSystem);
 			addChild( _ship );
 			
 			_loader.load( new URLRequest( "https://lostinspace.lanemarknad.se:8000/api2/?session=deb6dcda-3330-44df-b622-d955215c6483&command=longrange" ) );
@@ -67,15 +73,8 @@ package
 		private function onLoaded( event:Event ):void
 		{
 			_data = JSON.parse( _loader.data );
-
 			
-			_map.fillRect( new Rectangle( 0, 0, MAP_WIDTH, MAP_HEIGHT ), 0x000000 );
-			for each( var starObject:Object in _data.stars )
-			{
-				var star = new Star( starObject );
-				renderStar( star );
-			}
-			
+			_solarSystem.draw(_data);
 			_timer = new Timer( 400 );
 			_timer.addEventListener( TimerEvent.TIMER, onTimerEvent );
 			_timer.start();
@@ -94,7 +93,7 @@ package
 			try
 			{
 				var data:Object = JSON.parse( _shipLoader.data );
-				_ship.setPosition( data.unix * MAP_ZOOM, data.uniy * MAP_ZOOM );
+				_ship.setPosition( data.unix, data.uniy );
 			}
 			catch( e:Error )
 			{
@@ -102,15 +101,9 @@ package
 			}
 		}
 
-		private function renderStar( star:Star ):void
-		{
-			star.x *= MAP_ZOOM;
-			star.y *= MAP_ZOOM;
-			star.addEventListener( MouseEvent.CLICK, onClick );
-			addChild( star );
-		}
 		
-		private function onClick( event:MouseEvent ):void
+		
+		private function onStarClicked( event:StarEvent ):void
 		{
 			_api.gotoStarsystem( Star( event.target ).name );
 		}

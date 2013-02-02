@@ -19,10 +19,12 @@ package devnull {
 		private var _currentPos:Point = new Point();
 		private var _lastPos:Point;
 		private var _cnt:int = 0;
+		private var _vp:ViewPort;
 		
-		public function SpaceShip() {
-			
-			
+		public function SpaceShip(vp:ViewPort) {
+			_vp = vp;
+
+
 			_fire = new <BitmapData>[];
 			var shipBmp:Bitmap = new Ship();
 			shipBmp.x = shipBmp.y = -32;
@@ -62,7 +64,10 @@ package devnull {
 			_lastPos.x = x;
 			_lastPos.y = y;
 		}
-		
+
+		public function moveTo(x:Number, y:Number):void {
+			
+		}
 
 		
 		
