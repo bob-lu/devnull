@@ -5,20 +5,28 @@
  */
 package
 {
+	import devnull.ViewPort;
+
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 
 	public class Star extends Sprite
 	{
+		private var _data:Object;
 		private var _class:String;
 		private var _planets:String;
 		private var _name:String;
+		private var _vp:ViewPort;
 		
-		public function Star( data:Object )
+		public function Star(vp:ViewPort, data:Object)
 		{
-			x = data.x;
-			y = data.y;
+			_data = data;
+			
+			_vp = vp;
+			_vp.addEventListener(ViewPort.UPDATE, updatePosition);
+			updatePosition();
 			
 			_class = data["class"];
 			_planets = data["planets"];
@@ -28,6 +36,7 @@ package
 			tf.textColor = 0xffffff;
 			tf.autoSize = TextFieldAutoSize.LEFT;
 			tf.text = _name +" - "+_class +" ("+ _planets +")";
+			tf.selectable = false;
 
 			graphics.beginFill( 0xffff00, 0.3 );
 			graphics.drawCircle( 0, 0, 2 );
@@ -50,6 +59,11 @@ package
 			addChild(tf);
 		}
 
+		private function updatePosition(e:Event=null):void {
+			this.x = _vp.transformX(_data.x);
+			this.y = _vp.transformY(_data.y);
+		}
+		
 
 		override public function get name():String
 		{
