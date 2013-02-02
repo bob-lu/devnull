@@ -39,6 +39,8 @@ package
 			graphics.drawCircle( 0, 0, 5 );
 			graphics.endFill();
 			
+			useHandCursor = true;
+			
 			tf.x = -( tf.width * 0.5 );
 			tf.y = 5 * 0.5 + 2;
 			addChild(tf);
