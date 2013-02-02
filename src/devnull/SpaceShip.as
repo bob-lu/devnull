@@ -35,12 +35,15 @@ package devnull {
 		}
 
 		private function onEF(event:Event):void {
-//			if (++_cnt%10 == 0) {
-//				var rad:Number = this.rotation * Math.PI
-//				var cos:Number = Math.cos()
-//				var fire:Fire = new Fire(this.x, this.y, this.rotation);
-//				
-//			}
+			if (++_cnt%4 == 0) {
+				var rad:Number = (this.rotation+90) * Math.PI / 180;
+				var cos:Number = Math.cos(rad);
+				var sin:Number = Math.sin(rad);
+				
+				
+				var fire:Fire = new Fire(this.x + (cos*30), this.y + (sin*30), cos*2, sin*2);
+				parent.addChild(fire);
+			}
 		}
 
 
