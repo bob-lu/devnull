@@ -7,8 +7,6 @@ package
 	import devnull.ViewPort;
 	import devnull.events.StarEvent;
 
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -35,6 +33,7 @@ package
 			
 			
 			_vp = new ViewPort();
+			_vp.zoom = 3;
 			
 			_solarSystem = new SolarSystem(_vp);
 			_solarSystem.addEventListener(StarEvent.STAR_CLICKED, onStarClicked);

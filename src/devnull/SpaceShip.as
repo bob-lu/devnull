@@ -23,6 +23,7 @@ package devnull {
 		
 		public function SpaceShip(vp:ViewPort) {
 			_vp = vp;
+			_vp.addEventListener(ViewPort.UPDATE, onVpUpdate);
 
 
 			_fire = new <BitmapData>[];
@@ -34,6 +35,11 @@ package devnull {
 			_currentPos.y = 0;
 			
 			addEventListener(Event.ENTER_FRAME, onEF);
+		}
+
+		private function onVpUpdate(event:Event):void {
+			this.x = _vp.transformX(_currentPos.x);
+			this.y = _vp.transformY(_currentPos.y);
 		}
 
 		private function onEF(event:Event):void {
@@ -51,9 +57,12 @@ package devnull {
 
 		public function setPosition(x:Number, y:Number):void {
 			
-			this.x = _currentPos.x = x;
-			this.y = _currentPos.y = y;
+			_currentPos.x = x;
+			_currentPos.y = y;
 
+			this.x = _vp.transformX(x);
+			this.y = _vp.transformY(y);
+			
 			if (_lastPos == null) {
 				_lastPos = new Point();
 				return;
@@ -64,12 +73,6 @@ package devnull {
 			_lastPos.x = x;
 			_lastPos.y = y;
 		}
-
-		public function moveTo(x:Number, y:Number):void {
-			
-		}
-
-		
 		
 	}
 }

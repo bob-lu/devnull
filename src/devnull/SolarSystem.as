@@ -34,20 +34,22 @@ package devnull {
 			_map.fillRect( new Rectangle( 0, 0, _vp.width, _vp.height), 0x000000 );
 			for each( var starObject:Object in _data.stars )
 			{
-				var star = new Star( starObject );
+				var star = new Star( _vp, starObject );
 				renderStar( star );
 			}
 		}
 
 		private function renderStar( star:Star ):void
 		{
-			star.x *= _vp.zoom;
-			star.y *= _vp.zoom;
 			star.addEventListener( MouseEvent.CLICK, onClick );
 			addChild( star );
 		}
 
 		private function onClick(event:MouseEvent):void {
+
+			_vp.zoom = Math.random() * 3 + 2;
+			_vp.updateViewPort();
+			
 			var star:Star = Star( event.target );
 			dispatchEvent(new StarEvent(StarEvent.STAR_CLICKED, star));
 		}
