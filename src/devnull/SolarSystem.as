@@ -3,7 +3,7 @@
  * @author Tommy Salomonsson
  */
 package devnull {
-	import devnull.events.StarEvent;
+	import devnull.events.NavigationEvent;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -44,11 +44,11 @@ package devnull {
 
 		private function renderStar( star:Star ):void
 		{
-			star.addEventListener( MouseEvent.CLICK, onClick );
+			star.addEventListener( MouseEvent.CLICK, onStarClicked );
 			addChild( star );
 		}
 
-		private function onClick(event:MouseEvent):void {
+		private function onStarClicked(event:MouseEvent):void {
 			
 			if (!(event.target is Star))
 				return;
@@ -60,7 +60,7 @@ package devnull {
 			_vp.tweenToZoom(zoom, 1);
 			_vp.tweenToCenterOnPoint(star.originalX, star.originalY, 1);
 			
-			dispatchEvent(new StarEvent(StarEvent.STAR_CLICKED, star));
+			dispatchEvent(new NavigationEvent(NavigationEvent.NAVIGATE_TO_STAR, star.name));
 		}
 
 		public function drawPlanets( _planetMap:Object ):void
@@ -71,9 +71,10 @@ package devnull {
 				
 				for each( var planetData:Object in _planetMap.system.planetarray )
 				{
-					var p:Planet = new Planet( _vp, planetData );
-					addChild(p);
-					_planets.push(p);
+					var planet:Planet = new Planet( _vp, planetData );
+					planet.addEventListener(MouseEvent.CLICK, onPlanetClicked);
+					addChild(planet);
+					_planets.push(planet);
 				}
 				
 				_vp.tweenToZoom( 40, 2 );
@@ -81,8 +82,19 @@ package devnull {
 			}
 		}
 
+		private function onPlanetClicked(event:MouseEvent):void {
+			var planet:Planet = event.target as Planet;
+			if (planet != null) {
+				_vp.tweenToCenterOnPoint(planet.originalX, planet.originalY, 1);
+				_vp.tweenToZoom(65, 1);
+				
+				dispatchEvent(new NavigationEvent(NavigationEvent.NAVIGATE_TO_PLANET, planet.name));
+			}
+		}
+
 		public function destroyPlanets():void {
 			for each(var planet:Planet in _planets) {
+				planet.removeEventListener(MouseEvent.CLICK, onPlanetClicked);
 				removeChild(planet);
 			}
 			_planets = new <Planet>[];

@@ -49,5 +49,13 @@ package devnull {
 			_vp.removeEventListener(ViewPort.UPDATE, updateCoordinates);
 			addEventListener(Event.REMOVED_FROM_STAGE, destroy);
 		}
+
+		public function get originalX():Number {
+			return _data.x;
+		}
+		
+		public function get originalY():Number {
+			return _data.y;
+		}
 	}
 }
