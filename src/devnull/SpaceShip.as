@@ -34,6 +34,9 @@ package devnull {
 			_currentPos.x = 0;
 			_currentPos.y = 0;
 			
+			this.mouseEnabled = false;
+			this.mouseChildren = false;
+			
 			addEventListener(Event.ENTER_FRAME, onEF);
 		}
 

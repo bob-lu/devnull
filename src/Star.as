@@ -64,6 +64,12 @@ package
 			this.y = _vp.transformY(_data.y);
 		}
 		
+		public function get originalX():Number {
+			return _data.x;
+		}
+		public function get originalY():Number {
+			return _data.y;
+		}
 
 		override public function get name():String
 		{

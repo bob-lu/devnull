@@ -6,10 +6,8 @@ package devnull {
 	import devnull.events.StarEvent;
 
 	import flash.display.Bitmap;
-
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 
@@ -46,11 +44,15 @@ package devnull {
 		}
 
 		private function onClick(event:MouseEvent):void {
-
-			_vp.zoom = Math.random() * 3 + 2;
-			_vp.updateViewPort();
+			
+			if (!(event.target is Star))
+				return;
 			
 			var star:Star = Star( event.target );
+
+			var zoom:Number = Math.random() * 3 + 2;
+			_vp.centerOnPoint(star.originalX, star.originalY, zoom);
+			
 			dispatchEvent(new StarEvent(StarEvent.STAR_CLICKED, star));
 		}
 		
