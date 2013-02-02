@@ -121,6 +121,10 @@ package devnull
 						getShortRange();
 						trace( "At Star - stopping counter" );
 						_update.stop();
+
+						var x:Number = ( ( _pos.systemx - 100 ) / Main.PLANET_RATIO ) + _pos.unix;
+						var y:Number = ( ( _pos.systemy - 100 ) / Main.PLANET_RATIO ) + _pos.uniy;
+						dispatchEvent( new APIEvent( APIEvent.SHIP_MOVE, x, y, false ) );
 					}
 				}
 				else if( _goingToPlanet )
