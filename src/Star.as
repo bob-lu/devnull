@@ -38,6 +38,9 @@ package
 			graphics.beginFill( 0xffff00, 0.3 );
 			graphics.drawCircle( 0, 0, 5 );
 			graphics.endFill();
+			graphics.beginFill( 0xffff00, 0.3 );
+			graphics.drawCircle( 0, 0, 7 );
+			graphics.endFill();
 			
 			useHandCursor = true;
 			

@@ -1,5 +1,7 @@
 package
 {
+	import devnull.SpaceShip;
+
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
@@ -24,7 +26,7 @@ package
 		private const MAP_ZOOM:Number = 2.3;
 		private var _timer:Timer;
 		private var _shipLoader:URLLoader;
-		private var _ship:Sprite;
+		private var _ship:SpaceShip;
 		
 		public function Main()
 		{
@@ -39,11 +41,7 @@ package
 			_loader.addEventListener( Event.COMPLETE, onLoaded );
 			_loader.addEventListener( IOErrorEvent.IO_ERROR, onError );
 			
-			_ship = new Sprite();
-			_ship.graphics.beginFill( 0xff0099 );
-			_ship.graphics.drawRect( 0, 0, 10, 10 );
-			_ship.graphics.endFill();
-			
+			_ship = new SpaceShip();
 			addChild( _ship );
 			
 			_loader.load( new URLRequest( "https://lostinspace.lanemarknad.se:8000/api2/?session=deb6dcda-3330-44df-b622-d955215c6483&command=longrange" ) );
@@ -81,9 +79,15 @@ package
 
 		private function moveShip( event:Event ):void
 		{
-			var data:Object = JSON.parse( _shipLoader.data );
-			_ship.x = data.unix * MAP_ZOOM;
-			_ship.y = data.uniy * MAP_ZOOM;
+			try
+			{
+				var data:Object = JSON.parse( _shipLoader.data );
+				_ship.setPosition( data.unix * MAP_ZOOM, data.uniy * MAP_ZOOM );
+			}
+			catch( e:Error )
+			{
+				trace( "Error parsing json: "+ e.message );
+			}
 		}
 
 		private function renderStar( star:Star ):void
