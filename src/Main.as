@@ -7,7 +7,7 @@ package
 	import devnull.SolarSystem;
 	import devnull.SpaceShip;
 	import devnull.ViewPort;
-	import devnull.events.StarEvent;
+	import devnull.events.NavigationEvent;
 
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -36,7 +36,9 @@ package
 			_vp = new ViewPort();
 			
 			_solarSystem = new SolarSystem(_vp);
-			_solarSystem.addEventListener(StarEvent.STAR_CLICKED, onStarClicked);
+			_solarSystem.addEventListener(NavigationEvent.NAVIGATE_TO_STAR, onNavigateToStar);
+			_solarSystem.addEventListener(NavigationEvent.NAVIGATE_TO_PLANET, onNavigateToPlanet);
+			
 			_ship = new SpaceShip(_vp);
 			addChild(_solarSystem);
 			addChild( _ship );
@@ -45,6 +47,8 @@ package
 			_api.addEventListener( APIEvent.SHIP_MOVE, onShipMove );
 			_api.getLongRange();
 		}
+
+		
 
 		private function onKeyUp(event:KeyboardEvent):void {
 			if (event.keyCode == Keyboard.A) {
@@ -68,9 +72,13 @@ package
 			_ship.setPosition( x-sx, y-sy );
 		}
 		
-		private function onStarClicked( event:StarEvent ):void
+		private function onNavigateToStar( event:NavigationEvent ):void
 		{
-			_api.gotoStarsystem( event.star.name );
+			_api.gotoStarsystem( event.name );
+		}
+
+		private function onNavigateToPlanet(event:NavigationEvent):void {
+			_api.gotoPlanet(event.name);
 		}
 	}
 }
