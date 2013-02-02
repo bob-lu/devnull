@@ -80,6 +80,7 @@ package devnull
 				_samePosCount++;
 				if( _samePosCount > 5 )
 				{
+					trace( "Stopping counter" );
 					_samePosCount = 0;
 					_update.stop();
 				}
