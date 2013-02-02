@@ -21,6 +21,8 @@ package devnull {
 		private var _cnt:int = 0;
 		private var _vp:ViewPort;
 		
+		private var _spinCounter:int;
+		
 		public function SpaceShip(vp:ViewPort) {
 			_vp = vp;
 			_vp.addEventListener(ViewPort.UPDATE, onVpUpdate);
@@ -28,7 +30,8 @@ package devnull {
 
 			_fire = new <BitmapData>[];
 			var shipBmp:Bitmap = new Ship();
-			shipBmp.x = shipBmp.y = -32;
+			shipBmp.scaleX = shipBmp.scaleY = .5;
+			shipBmp.x = shipBmp.y = -shipBmp.width * .5;
 			addChild(shipBmp);
 			
 			_currentPos.x = 0;
@@ -39,7 +42,7 @@ package devnull {
 			
 			addEventListener(Event.ENTER_FRAME, onEF);
 			
-			scaleX = scaleY = .5;
+			
 		}
 
 		private function onVpUpdate(event:Event):void {
@@ -48,19 +51,26 @@ package devnull {
 		}
 
 		private function onEF(event:Event):void {
+			
+			if (--_spinCounter < 0) {
+				this.rotation += 1;
+			}
+			
 			if (++_cnt%4 == 0) {
 				var rad:Number = (this.rotation+90) * Math.PI / 180;
 				var cos:Number = Math.cos(rad);
 				var sin:Number = Math.sin(rad);
 				
 				
-				var fire:Fire = new Fire(this.x + (cos*30), this.y + (sin*16), cos*2, sin*2);
+				var fire:Fire = new Fire(this.x + (cos*16), this.y + (sin*16), cos*2, sin*2);
 				parent.addChild(fire);
 			}
 		}
 
 
 		public function setPosition(x:Number, y:Number):void {
+			
+			_spinCounter = 200;
 			
 			_currentPos.x = x;
 			_currentPos.y = y;
@@ -73,10 +83,12 @@ package devnull {
 				return;
 			}
 			
-			var rot:Number = Math.atan2(_lastPos.y - _currentPos.y, _lastPos.x - _currentPos.x);
-			this.rotation = (rot/Math.PI * 180) - 90;
-			_lastPos.x = x;
-			_lastPos.y = y;
+			if (!_lastPos.equals(_currentPos)) {
+				var rot:Number = Math.atan2(_lastPos.y - _currentPos.y, _lastPos.x - _currentPos.x);
+				this.rotation = (rot/Math.PI * 180) - 90;
+				_lastPos.x = x;
+				_lastPos.y = y;
+			}
 		}
 		
 	}

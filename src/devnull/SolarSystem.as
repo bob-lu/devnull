@@ -5,15 +5,11 @@
 package devnull {
 	import devnull.events.NavigationEvent;
 
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import flash.geom.Rectangle;
 
 	public class SolarSystem extends Sprite {
 		private var _vp:ViewPort;
-		private var _map:BitmapData;
 		private var _data:Object;
 
 		private var _stars:Vector.<Star>;
