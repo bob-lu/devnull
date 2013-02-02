@@ -7,11 +7,10 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
+	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
 
 	public class Main extends Sprite
 	{
@@ -46,34 +45,29 @@ package
 		private function onLoaded( event:Event ):void
 		{
 			_data = JSON.parse( _loader.data );
-			drawMap( _data.stars, 0, 0 );
-		}
-		
-		private function drawMap(listOfStars:Array, mapX:Number, mapY:Number):void {
+
 
 			_map.fillRect( new Rectangle( 0, 0, MAP_WIDTH, MAP_HEIGHT ), 0x000000 );
-
-			for each(var star:Object in listOfStars) {
-
-				var sX:Number = (star.x - mapX) * MAP_ZOOM;
-				var sY:Number = (star.y - mapY) * MAP_ZOOM;
-				var sRadius:Number = 5 * MAP_ZOOM;
-
-				var tempHolder:Sprite = new Sprite();
-				tempHolder.graphics.beginFill(0xffff00, 0.6);
-				tempHolder.graphics.drawCircle(sX, sY, sRadius);
-				tempHolder.graphics.endFill();
-				var tf:TextField = new TextField();
-				tf.textColor = 0xffffff;
-				tf.autoSize = TextFieldAutoSize.LEFT;
-				tf.text = star.name +" - "+star["class"] +" ("+ star.planets +")";
-				tf.x = sX - tf.width * 0.5;
-				tf.y = sY + sRadius * 0.5 + 2;
-				tempHolder.addChild(tf);
-				_map.draw(tempHolder);
-
+			for each( var starObject:Object in _data.stars )
+			{
+				var star = new Star( starObject );
+				renderStar( star );
 			}
+		}
 
+		private function renderStar( star:Star ):void
+		{
+			star.x *= MAP_ZOOM;
+			star.y *= MAP_ZOOM;
+			star.addEventListener( MouseEvent.CLICK, onClick );
+			addChild( star );
+//			_map.draw(tempHolder);
+		}
+		
+		private function onClick( event:MouseEvent ):void
+		{
+			var star:Star = Star( event.target );
+			trace( star.name );
 		}
 	}
 }
