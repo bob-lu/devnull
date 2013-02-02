@@ -1,5 +1,7 @@
 package
 {
+	import devnull.APIEvent;
+	import devnull.APIHelper;
 	import devnull.SpaceShip;
 
 	import flash.display.Bitmap;
@@ -18,6 +20,8 @@ package
 
 	public class Main extends Sprite
 	{
+		private var _api:APIHelper;
+		
 		private var _loader:URLLoader;
 		private var _data:Object;
 		private var _map:BitmapData;
@@ -32,6 +36,9 @@ package
 		{
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align		= StageAlign.TOP_LEFT;
+			
+			_api = new APIHelper();
+			_api.addEventListener( APIEvent.SHIP_MOVE, onShipMove );
 
 			_map = new BitmapData(MAP_WIDTH, MAP_HEIGHT, false, 0);
 			var bmp:Bitmap = new Bitmap(_map);
@@ -45,6 +52,11 @@ package
 			addChild( _ship );
 			
 			_loader.load( new URLRequest( "https://lostinspace.lanemarknad.se:8000/api2/?session=deb6dcda-3330-44df-b622-d955215c6483&command=longrange" ) );
+		}
+
+		private function onShipMove( event:APIEvent ):void
+		{
+			_ship.setPosition( event.data["unix"] * MAP_ZOOM, event.data["uniy"] * MAP_ZOOM );
 		}
 
 		private function onError( event:IOErrorEvent ):void
@@ -100,12 +112,7 @@ package
 		
 		private function onClick( event:MouseEvent ):void
 		{
-			var star:Star = Star( event.target );
-			trace( star.name );
-			
-			var selectLoader:URLLoader = new URLLoader();
-			selectLoader.addEventListener( IOErrorEvent.IO_ERROR, onError );
-			selectLoader.load( new URLRequest( "https://lostinspace.lanemarknad.se:8000/api2/?session=deb6dcda-3330-44df-b622-d955215c6483&command=ship&arg=setunidest&arg2="+ encodeURI( star.name ) ) );
+			_api.gotoStarsystem( Star( event.target ).name );
 		}
 	}
 }
