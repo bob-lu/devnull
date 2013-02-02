@@ -67,13 +67,17 @@ package devnull {
 		{
 			if( _planetMap.system != null )
 			{
-				var p:Planet = new Planet(_vp, null);
-				addChild(p);
-				_planets.push(p);
-				
-				
 				trace( "At star: "+ _planetMap.system.name );
-				trace( "Pos: ", _planetMap.system.x, _planetMap.system.y );
+				
+				for each( var planetData:Object in _planetMap.system.planetarray )
+				{
+					var p:Planet = new Planet( _vp, planetData );
+					addChild(p);
+					_planets.push(p);
+				}
+				
+				_vp.tweenToZoom( 40, 2 );
+				
 			}
 		}
 

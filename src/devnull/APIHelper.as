@@ -73,11 +73,14 @@ package devnull
 			{
 				if( cache == null || _planetMap["system"].name != cache["system"].name )
 				{
+					var starX:Number = _planetMap.system.x;
+					var starY:Number = _planetMap.system.y;
+					
 					trace( "Parsed planets" );
 					for( var i:int = 0; i < _planetMap.system.planetarray.length; i++ )
 					{
-						_planetMap.system.planetarray[i].x = (_planetMap.system.planetarray[i].x - 100) / Main.PLANET_RATIO; 
-						_planetMap.system.planetarray[i].y = (_planetMap.system.planetarray[i].y - 100) / Main.PLANET_RATIO; 
+						_planetMap.system.planetarray[i].x = ( ( _planetMap.system.planetarray[i].x - 100) / Main.PLANET_RATIO ) + starX; 
+						_planetMap.system.planetarray[i].y = ( ( _planetMap.system.planetarray[i].y - 100) / Main.PLANET_RATIO ) + starY; 
 					}
 					_solarSystem.drawPlanets( _planetMap );
 				}

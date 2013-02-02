@@ -5,6 +5,8 @@
 package devnull {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 
 	public class Planet extends Sprite{
 		private var _vp:ViewPort;
@@ -12,17 +14,30 @@ package devnull {
 		
 		
 		
-		public function Planet(vp:ViewPort, data:Object) {
+		public function Planet(vp:ViewPort, data:Object)
+		{
 			_vp = vp;
 			_data = data;
 			_vp.addEventListener(ViewPort.UPDATE, updateCoordinates);
 			addEventListener(Event.REMOVED_FROM_STAGE, destroy);
 			
-			this.graphics.beginFill(0x00ff00);
-			this.graphics.drawCircle(0,0,10);
+			var planetRadius:Number = _data.radius / 1000;
+			
+			this.graphics.beginFill( Math.random()*0xffffff, .8 );
+			this.graphics.drawCircle( 0, 0, 2 * planetRadius );
 			this.graphics.endFill();
+
+			var tf:TextField = new TextField();
+			tf.textColor = 0xffffff;
+			tf.autoSize = TextFieldAutoSize.LEFT;
+			tf.text = _data.planet_no;
+			tf.selectable = false;
 			
 			updateCoordinates();
+			
+			tf.x = -( tf.width * 0.5 );
+			tf.y = 5 * 0.5 + 2;
+			addChild(tf);
 		}
 
 		private function updateCoordinates(event:Event=null):void {

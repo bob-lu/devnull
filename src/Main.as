@@ -22,7 +22,7 @@ package
 		private var _ship:SpaceShip;
 		private var _vp:ViewPort;
 		private var _solarSystem:SolarSystem;
-		public static const PLANET_RATIO:Number = 20;
+		public static const PLANET_RATIO:Number = 15;
 		
 		[SWF(width=800,height=600)]
 		
