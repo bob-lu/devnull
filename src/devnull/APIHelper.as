@@ -25,6 +25,8 @@ package devnull
 		private var _solarSystem:SolarSystem;
 		private var _planetLoader:URLLoader;
 		private var _planetMap:Object;
+		private var _goingToSystem:Boolean;
+		private var _goingToPlanet:Boolean;
 		
 		public function APIHelper( solarSystem:SolarSystem )
 		{
@@ -141,6 +143,8 @@ package devnull
 
 		public function gotoStarsystem( name:String ):void
 		{
+			_goingToPlanet = false;
+			_goingToSystem = true;
 			var selectLoader:URLLoader = new URLLoader();
 			selectLoader.addEventListener( IOErrorEvent.IO_ERROR, onError );
 			selectLoader.load( new URLRequest( URL +"&command=ship&arg=setunidest&arg2="+ encodeURI( name ) ) );
@@ -148,17 +152,17 @@ package devnull
 			if( !_update.running )
 				_update.start();
 		}
-
-		/*
+		
 		public function gotoPlanet( name:String ):void
 		{
+			_goingToPlanet = true;
+			_goingToSystem = false;
 			var selectLoader:URLLoader = new URLLoader();
 			selectLoader.addEventListener( IOErrorEvent.IO_ERROR, onError );
-			selectLoader.load( new URLRequest( URL +"&command=ship&arg=setunidest&arg2="+ encodeURI( name ) ) );
+			selectLoader.load( new URLRequest( URL +"&command=ship&arg=setsystemdest&arg2="+ encodeURI( name ) ) );
 			if( !_update.running )
 				_update.start();
 		}
-		*/
 
 		private function onError( e:IOErrorEvent ):void
 		{
