@@ -5,6 +5,7 @@
  */
 package
 {
+	import devnull.SpaceText;
 	import devnull.ViewPort;
 
 	import flash.display.Sprite;
@@ -31,13 +32,7 @@ package
 			_class = data["class"];
 			_planets = data["planets"];
 			_name = data["name"];
-
-			var tf:TextField = new TextField();
-			tf.textColor = 0xffffff;
-			tf.autoSize = TextFieldAutoSize.LEFT;
-			tf.text = _name +" - "+_class +" ("+ _planets +")";
-			tf.selectable = false;
-
+			
 			graphics.beginFill( 0xffff00, 0.3 );
 			graphics.drawCircle( 0, 0, 2 );
 			graphics.endFill();
@@ -53,9 +48,10 @@ package
 			
 			useHandCursor = true;
 			buttonMode = true;
-			
+
+			var tf:SpaceText = new SpaceText(_name +" - "+_class +" ("+ _planets +")");
 			tf.x = -( tf.width * 0.5 );
-			tf.y = 5 * 0.5 + 2;
+			tf.y = 5 * 0.5 + 4;
 			addChild(tf);
 		}
 

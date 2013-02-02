@@ -54,7 +54,7 @@ package devnull {
 				var sin:Number = Math.sin(rad);
 				
 				
-				var fire:Fire = new Fire(this.x + (cos*30), this.y + (sin*30), cos*2, sin*2);
+				var fire:Fire = new Fire(this.x + (cos*30), this.y + (sin*16), cos*2, sin*2);
 				parent.addChild(fire);
 			}
 		}
