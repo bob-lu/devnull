@@ -57,5 +57,10 @@ package devnull {
 		public function get originalY():Number {
 			return _data.y;
 		}
+
+		override public function get name():String
+		{
+			return _data.plante_no;
+		}
 	}
 }
