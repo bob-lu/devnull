@@ -12,6 +12,8 @@ package devnull {
 		private var _life:Number = 30;
 		public function Fire(x:Number, y:Number, xspeed:Number, yspeed:Number) {
 			
+			this.mouseEnabled = false;
+			
 			_xspeed = xspeed;
 			_yspeed = yspeed;
 			this.graphics.beginFill(0xff0000, 0.5);

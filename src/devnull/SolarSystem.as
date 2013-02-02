@@ -31,6 +31,7 @@ package devnull {
 			_planets = new <Planet>[];
 			_edge = new Edge();
 			_edge.addEventListener(MouseEvent.CLICK, onEdgeClicked);
+			addChild(_edge);
 		}
 
 		
@@ -80,7 +81,6 @@ package devnull {
 					addChild(planet);
 					_planets.push(planet);
 				}
-				
 				_vp.tweenToZoom( 40, 2 );
 				
 			}
